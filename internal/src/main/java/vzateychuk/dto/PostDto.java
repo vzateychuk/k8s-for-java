@@ -1,15 +1,15 @@
 package vzateychuk.dto;
 
-import lombok.ToString;
-
 import java.time.LocalDate;
 
-@ToString
 public class PostDto {
     private Long id;
     private long authorId;
     private String text;
     private LocalDate postedAt;
+
+    public PostDto() {
+    }
 
     public PostDto(Long id, long authorId, String text, LocalDate postedAt) {
         this.id = id;

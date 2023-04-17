@@ -2,6 +2,7 @@ package vzateychuk.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import vzateychuk.dto.UserDto;
 import vzateychuk.exceptions.EntityAlreadyExistsException;
 import vzateychuk.exceptions.NotFoundEntityException;
@@ -33,7 +34,7 @@ public class UsersController {
         return userRepo
                 .findById(id)
                 .orElseThrow(
-                        () -> new NotFoundEntityException("userId: " + id + " not found")
+                        () -> new NotFoundEntityException("UserId: " + id + " not found")
                 );
     }
 
@@ -41,7 +42,7 @@ public class UsersController {
     public UserDto create(@RequestBody UserDto dto) {
 
         if (dto.getId() != null && userRepo.findById(dto.getId()).isPresent()) {
-            throw new EntityAlreadyExistsException("userId: " + dto.getId() + " already exists");
+            throw new EntityAlreadyExistsException("UserId: " + dto.getId() + " already exists");
         }
         UserEntity entity = mapper.toEntity(dto);
         return mapper.toDto(userRepo.save(entity));
@@ -51,7 +52,9 @@ public class UsersController {
     public UserDto update(@RequestBody UserDto dto) {
 
         if (dto.getId() == null) {
-            throw new NotFoundEntityException("userId cant be empty");
+            throw new NotFoundEntityException("UserId cant be empty");
+        } else if (userRepo.findById(dto.getId()).isEmpty()) {
+            throw new NotFoundEntityException("UserId: " + dto.getId() + " not found");
         }
         UserEntity entity = mapper.toEntity(dto);
         return mapper.toDto(userRepo.save(entity));

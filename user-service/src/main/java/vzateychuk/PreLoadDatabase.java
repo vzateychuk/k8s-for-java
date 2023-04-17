@@ -17,8 +17,8 @@ public class PreLoadDatabase {
     CommandLineRunner preload(UserRepo userRepo) {
 
         return args -> {
-            log.info( "Preload " + userRepo.save(new UserEntity( "Bilbo Baggins", 0)));
-            log.info("Preload " + userRepo.save(new UserEntity( "Frodo Baggins", 0)));
+            log.info( "Preload " + userRepo.save(new UserEntity("Bilbo Baggins", 0)));
+            log.info("Preload " + userRepo.save(new UserEntity(  "Frodo Baggins", 0)));
             log.info("Preload " + userRepo.save(new UserEntity( "Gendalf Gray", 0)));
         };
     }

@@ -7,8 +7,9 @@ import vzateychuk.exceptions.EntityAlreadyExistsException;
 import vzateychuk.exceptions.NotFoundEntityException;
 import vzateychuk.map.Mapper;
 import vzateychuk.model.PostEntity;
-import vzateychuk.repo.PostRepo;
+import vzateychuk.service.PostService;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,13 +17,13 @@ import java.util.stream.Collectors;
 @RequestMapping("/posts")
 public class PostController {
 
-    @Autowired private PostRepo PostRepo;
+    @Autowired private PostService postService;
     @Autowired private Mapper<PostEntity, PostDto> mapper;
 
     @GetMapping("/")
     public List<PostDto> findAll() {
 
-        return PostRepo.findAll().stream()
+        return postService.findAll().stream()
                 .map(mapper::toDto)
                 .collect(Collectors.toList());
     }
@@ -30,7 +31,7 @@ public class PostController {
     @GetMapping("/{id}")
     public PostEntity findOne(@PathVariable Long id) {
 
-        return PostRepo
+        return postService
                 .findById(id)
                 .orElseThrow(
                         () -> new NotFoundEntityException("PostId: " + id + " not found")
@@ -40,11 +41,12 @@ public class PostController {
     @PostMapping("/")
     public PostDto create(@RequestBody PostDto dto) {
 
-        if (dto.getId() != null && PostRepo.findById(dto.getId()).isPresent()) {
+        if (dto.getId() != null && postService.findById(dto.getId()).isPresent()) {
             throw new EntityAlreadyExistsException("PostId: " + dto.getId() + " already exists");
         }
         PostEntity entity = mapper.toEntity(dto);
-        return mapper.toDto(PostRepo.save(entity));
+        entity.setPostedAt(LocalDate.now());
+        return mapper.toDto(postService.save(entity));
     }
 
     @PutMapping("/")
@@ -52,9 +54,12 @@ public class PostController {
 
         if (dto.getId() == null) {
             throw new NotFoundEntityException("PostId cant be empty");
+        } else if (postService.findById(dto.getId()).isEmpty()) {
+            throw new NotFoundEntityException("PostId: " + dto.getId() + " not found");
         }
         PostEntity entity = mapper.toEntity(dto);
-        return mapper.toDto(PostRepo.save(entity));
+        entity.setPostedAt(LocalDate.now());
+        return mapper.toDto(postService.save(entity));
     }
 
     @DeleteMapping("/{id}")
@@ -64,7 +69,7 @@ public class PostController {
             throw new NotFoundEntityException("PostId cant be empty");
         }
 
-        PostRepo.deleteById(id);
+        postService.deleteById(id);
     }
 
 }

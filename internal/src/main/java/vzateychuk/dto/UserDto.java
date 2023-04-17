@@ -1,9 +1,13 @@
 package vzateychuk.dto;
 
-public class UserDto {
+import java.io.Serializable;
+
+public class UserDto  implements Serializable {
     private Long id;
     private String username;
     private int amountOfPosts;
+
+    public UserDto() {}
 
     public UserDto(Long id, String username, int amountOfPosts) {
         this.id = id;

@@ -15,6 +15,11 @@ public class UserEntity {
     }
 
     public UserEntity(String username, int amountOfPosts) {
+        this(null, username, amountOfPosts);
+    }
+
+    public UserEntity(Long id, String username, int amountOfPosts) {
+        this.id = id;
         this.username = username;
         this.amountOfPosts = amountOfPosts;
     }
