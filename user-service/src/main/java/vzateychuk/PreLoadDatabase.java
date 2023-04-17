@@ -9,12 +9,12 @@ import vzateychuk.model.UserEntity;
 import vzateychuk.repo.UserRepo;
 
 @Configuration
-public class LoadDatabase {
+public class PreLoadDatabase {
 
-    private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
+    private static final Logger log = LoggerFactory.getLogger(PreLoadDatabase.class);
 
     @Bean
-    CommandLineRunner initDatabase(UserRepo userRepo) {
+    CommandLineRunner preload(UserRepo userRepo) {
 
         return args -> {
             log.info( "Preload " + userRepo.save(new UserEntity( "Bilbo Baggins", 0)));

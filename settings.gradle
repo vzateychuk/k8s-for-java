@@ -1,4 +1,4 @@
-rootProject.name = 'k8s-mentoring-program'
+rootProject.name = 'k8s-ment'
 include 'internal'
 include 'user-service'
 include 'post-service'
