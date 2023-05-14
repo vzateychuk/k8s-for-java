@@ -20,7 +20,7 @@ public class UsersController {
     @Autowired private UserRepo userRepo;
     @Autowired private Mapper<UserEntity, UserDto> mapper;
 
-    @GetMapping("/")
+    @GetMapping({"", "/"})
     public List<UserDto> findAll() {
 
         return userRepo.findAll().stream()
@@ -38,7 +38,7 @@ public class UsersController {
                 );
     }
 
-    @PostMapping("/")
+    @PostMapping({"", "/"})
     public UserDto create(@RequestBody UserDto dto) {
 
         if (dto.getId() != null && userRepo.findById(dto.getId()).isPresent()) {
@@ -48,7 +48,7 @@ public class UsersController {
         return mapper.toDto(userRepo.save(entity));
     }
 
-    @PutMapping("/")
+    @PutMapping({"", "/"})
     public UserDto update(@RequestBody UserDto dto) {
 
         if (dto.getId() == null) {

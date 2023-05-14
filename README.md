@@ -3,5 +3,11 @@ Pet project with two services:
 - [User-Service](./user-service) is CRUD service for managing users. It should use persistent storage for storing users
 - [Post-Service](./post-service) is CRUD service for managing posts. It should use persistent storage for storing posts
 
+## Build and upload docker images
+run from bash console:
+```shell
+./build-all.sh
+```
+
 ## Links
 [Siarhei_Svila kubernetes-mentoring-program](https://git.epam.com/Siarhei_Svila/kubernetes-mentoring-program/-/blob/main/1-microservices-architecture-and-docker/task/README.md)

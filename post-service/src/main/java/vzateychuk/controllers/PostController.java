@@ -20,7 +20,7 @@ public class PostController {
     @Autowired private PostService postService;
     @Autowired private Mapper<PostEntity, PostDto> mapper;
 
-    @GetMapping("/")
+    @GetMapping({"", "/"})
     public List<PostDto> findAll() {
 
         return postService.findAll().stream()
@@ -38,7 +38,7 @@ public class PostController {
                 );
     }
 
-    @PostMapping("/")
+    @PostMapping({"", "/"})
     public PostDto create(@RequestBody PostDto dto) {
 
         if (dto.getId() != null && postService.findById(dto.getId()).isPresent()) {
@@ -49,7 +49,7 @@ public class PostController {
         return mapper.toDto(postService.save(entity));
     }
 
-    @PutMapping("/")
+    @PutMapping({"", "/"})
     public PostDto update(@RequestBody PostDto dto) {
 
         if (dto.getId() == null) {
