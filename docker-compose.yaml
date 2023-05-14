@@ -23,6 +23,6 @@ services:
       DB_JDBC: jdbc:h2:mem:userdb
       DB_LOGIN: sa
       DB_PWD: pwd
-      USER_SERVICE_API: http://user-service:8081/users/
+      USER_SERVICE_API: http://host.docker.internal:8081/users/
     depends_on:
       - user-service
