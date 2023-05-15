@@ -1,9 +1,12 @@
-# kubernetes-mentoring-program
-Pet project with two services: 
+# kubernetes-for-java
+This pet project intended for Kubernets self-educational purpose.  
+
+Contains with two Java services: 
 - [User-Service](./user-service) is CRUD service for managing users. Running on port 8081
 - [Post-Service](./post-service) is CRUD service for managing posts. Running on port 8082
-
-## Build and upload docker images
+Which suppose to be deployed / run on Kubernets.
+- 
+## Build and upload images to docker-hub
 run from bash console:
 ```shell
 ./build-all.sh
@@ -21,13 +24,13 @@ docker-compose down
 ```
 
 # Kubernetes implementation
-In subfolder [k8s](./k8s) there is kubernetes configuration:
+Subfolder [k8s](./k8s) there is kubernetes configuration:
 - Namespace (f.e. k8s-program). All other objects will use this namespace;
 - 2 Services (user/post services). NodePort service type used;
 - 2 Deployments (user/post);
 
-## To run
-run
+## To run on k8s
+Go to subfolder [k8s](./k8s) and run from terminal:
 ```shell
 docker run --name=postgre-user -it -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=pwd -e POSTGRES_DB=userdb -p 5433:5432 -d postgres:latest
 docker run --name=postgre-post -it -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=pwd -e POSTGRES_DB=postdb -p 5434:5432 -d postgres:latest
@@ -35,13 +38,11 @@ kubectl apply -f ./namespace.yaml
 kubectl apply -f ./user-srv.yaml
 kubectl apply -f ./post-srv.yaml
 ``` 
-in current folder (k8-demo).
 
 To view all objects created by Kubernetes, run:
 ```shell
-kubectl get all -n=<your_namespace>
+kubectl get all -n=k8-vez
 ```
-Where *your_namespace* = **k8-vez** in this case.
 Along with services and deployments, this command outputs pods and replica-sets.
 
 ## To un-deploy
