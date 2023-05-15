@@ -4,10 +4,10 @@
 docker login
 
 cd ./user-service || exit
-docker build -t vzateychuk/user-service:2.0.0 ./
-docker push vzateychuk/user-service:2.0.0
+docker build -t vzateychuk/user-service:3.0.0 ./
+docker push vzateychuk/user-service:3.0.0
 
 cd ../post-service || exit
-docker build -t vzateychuk/post-service:2.0.0 ./
-docker push vzateychuk/post-service:2.0.0
+docker build -t vzateychuk/post-service:3.0.0 ./
+docker push vzateychuk/post-service:3.0.0
 

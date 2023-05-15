@@ -5,10 +5,12 @@ import lombok.ToString;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.time.LocalDate;
 
 @ToString
 @Entity
+@Table(name = "posts")
 public class PostEntity {
 
     private @Id @GeneratedValue Long id;

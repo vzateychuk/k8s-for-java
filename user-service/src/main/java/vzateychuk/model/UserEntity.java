@@ -3,8 +3,10 @@ package vzateychuk.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "users")
 public class UserEntity {
 
     private @Id @GeneratedValue Long id;

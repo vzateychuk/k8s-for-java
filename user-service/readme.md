@@ -4,19 +4,18 @@ CRUD service for managing users. It should use persistent storage for storing us
 
 ## Run locally
 To run the service you need to define env values:
-- DB_JDBC;
+- DB_HOST;
+- DB_PORT;
+- DB_NAME;
 - DB_LOGIN;
 - DB_PWD;
 
-Example:
-```shell
-  java -DDB_JDBC=jdbc:h2:mem:userdb -DDB_LOGIN=sa -DDB_PWD=pwd -jar ./build/libs/user-service-0.0.2.jar
-```
-
 ## Build and Run with Docker
+run commands:
 ```shell
-docker build -t vzateychuk/user-service:2.0.0 .
-docker run --name=user-service --env DB_JDBC=jdbc:h2:mem:userdb --env DB_LOGIN=sa --env DB_PWD=pwd -p 8081:8080 -d -ti vzateychuk/user-service:2.0.0
+docker run --name=postgres-userdb -it -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=pwd -e POSTGRES_DB=userdb -p 5433:5432 -d postgres:latest
+docker build -t vzateychuk/user-service:3.0.0 .
+docker run --name=user-service -e DB_HOST=host.docker.internal -e DB_NAME=userdb -e DB_PORT=5433 -e DB_LOGIN=admin -e DB_PWD=pwd -p 8081:8080 -d -ti vzateychuk/user-service:3.0.0
 ```
 
 ## DB Console
