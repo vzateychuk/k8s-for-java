@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: post-srv
+  namespace: k8s-vez
+spec:
+  type: LoadBalancer
+  selector:
+    app: k8s-post-srv
+  ports:
+    - protocol: "TCP"
+      port: 8082
+      targetPort: 8080
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-post
+  namespace: k8s-vez
+  labels:
+    app: vez-app
+    owner: vzateychuk
+spec:
+  selector:
+    matchLabels:
+      app: k8s-post-srv
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: k8s-post-srv
+        owner: vzateychuk
+    spec:
+      containers:
+        - name: post-service
+          image: vzateychuk/post-service:3.0.0
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_HOST
+              value: host.docker.internal
+            - name: DB_PORT
+              value: "5434"
+            - name: DB_NAME
+              value: postdb
+            - name: DB_LOGIN
+              value: admin
+            - name: DB_PWD
+              value: pwd
+            - name: USER_SERVICE_API
+              value: http://host.docker.internal:8081/users/
