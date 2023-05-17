@@ -32,11 +32,18 @@ spec:
         app: k8s-user-srv
         owner: vzateychuk
     spec:
+      volumes:
+        - name: user-store
+          persistentVolumeClaim:
+            claimName: user-pvc
       containers:
         - name: user-service
           image: vzateychuk/user-service:3.0.0
           ports:
             - containerPort: 8080
+          volumeMounts:
+            - mountPath: "/home/data"
+              name: user-store
           env:
             - name: DB_HOST
               value: host.docker.internal

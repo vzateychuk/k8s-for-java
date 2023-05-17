@@ -55,7 +55,7 @@ in current folder.
 This will delete all objects created.
 
 ## Links
-[User-service on docker hub](https://hub.docker.com/repository/docker/vzateychuk/user-service/general)
-[Post-service on docker hub](https://hub.docker.com/repository/docker/vzateychuk/post-service/general)
+- [User-service on docker hub](https://hub.docker.com/repository/docker/vzateychuk/user-service/general)
+- [Post-service on docker hub](https://hub.docker.com/repository/docker/vzateychuk/post-service/general)
 
 [Siarhei_Svila kubernetes-mentoring-program](https://git.epam.com/Siarhei_Svila/kubernetes-mentoring-program/-/blob/main/1-microservices-architecture-and-docker/task/README.md)
