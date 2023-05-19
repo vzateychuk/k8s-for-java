@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: userdb-srv
+  namespace: vez
+  labels:
+    app: userdb-srv
+spec:
+  selector:
+    app: userdb
+  type: ClusterIP
+  clusterIP: 10.110.61.113
+  ports:
+    - port: 5432
+      targetPort: 5432
+
+---
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: userdb-ss
+  namespace: vez
+spec:
+  selector:
+    matchLabels:
+      app: userdb # has to match .spec.template.metadata.labels
+  serviceName: "postgre"
+  replicas: 1
+  minReadySeconds: 10
+  template:
+    metadata:
+      labels:
+        app: userdb # has to match .spec.selector.matchLabels
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: userdb
+          image: postgres:latest
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              value: admin
+            - name: POSTGRES_PASSWORD
+              value: pwd
+            - name: POSTGRES_DB
+              value: userdb
+            - name: PGDATA
+              value: /data/pgdata
+          volumeMounts:
+            - name: userdb-vol
+              mountPath: /data
+  volumeClaimTemplates:
+    - metadata:
+        name: userdb-vol
+        namespace: vez
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: hostpath
+        resources:
+          requests:
+            storage: 250Mi

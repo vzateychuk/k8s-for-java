@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: post-srv
-  namespace: k8s-vez
+  namespace: vez
 spec:
   type: LoadBalancer
   selector:
@@ -17,7 +17,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: k8s-post
-  namespace: k8s-vez
+  namespace: vez
   labels:
     app: vez-app
     owner: vzateychuk
@@ -39,9 +39,9 @@ spec:
             - containerPort: 8080
           env:
             - name: DB_HOST
-              value: host.docker.internal
+              value: 10.99.22.101
             - name: DB_PORT
-              value: "5434"
+              value: "5432"
             - name: DB_NAME
               value: postdb
             - name: DB_LOGIN

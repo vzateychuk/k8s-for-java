@@ -2,11 +2,11 @@ apiVersion: v1
 kind: Service
 metadata:
   name: user-srv
-  namespace: k8s-vez
+  namespace: vez
 spec:
   type: LoadBalancer
   selector:
-    app: k8s-user-srv
+    app: usersrv
   ports:
     - protocol: "TCP"
       port: 8081
@@ -17,19 +17,19 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: k8s-user
-  namespace: k8s-vez
+  namespace: vez
   labels:
     app: vez-app
     owner: vzateychuk
 spec:
   selector:
     matchLabels:
-      app: k8s-user-srv
+      app: usersrv
   replicas: 2
   template:
     metadata:
       labels:
-        app: k8s-user-srv
+        app: usersrv
         owner: vzateychuk
     spec:
       volumes:
@@ -46,9 +46,9 @@ spec:
               name: user-store
           env:
             - name: DB_HOST
-              value: host.docker.internal
+              value: 10.110.61.113
             - name: DB_PORT
-              value: "5433"
+              value: "5432"
             - name: DB_NAME
               value: userdb
             - name: DB_LOGIN

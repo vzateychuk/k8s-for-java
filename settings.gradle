@@ -1,4 +1,4 @@
-rootProject.name = 'kubernetes-mentoring-program'
+rootProject.name = 'k8s-for-java'
 include 'internal'
 include 'user-service'
 include 'post-service'
