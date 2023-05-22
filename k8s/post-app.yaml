@@ -4,11 +4,13 @@ metadata:
   name: post-srv
   namespace: vez
 spec:
-  type: LoadBalancer
+  type: NodePort
   selector:
     app: k8s-post-srv
   ports:
-    - protocol: "TCP"
+    - name: http
+      nodePort: 30082
+      protocol: "TCP"
       port: 8082
       targetPort: 8080
 ---
