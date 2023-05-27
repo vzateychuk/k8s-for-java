@@ -63,7 +63,13 @@ spec:
                   name: user-cfg
                   key: userdb_db_name
             - name: DB_LOGIN
-              value: admin
+              valueFrom:
+                secretKeyRef:
+                  name: db-user-pass
+                  key: username
             - name: DB_PWD
-              value: pwd
+              valueFrom:
+                secretKeyRef:
+                  name: db-user-pass
+                  key: password
 

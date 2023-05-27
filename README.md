@@ -32,28 +32,29 @@ Subfolder [k8s](./k8s) there is kubernetes configuration:
 ## To run on k8s
 Go to subfolder [k8s](./k8s) and run from terminal:
 ```shell
-docker run --name=postgre-user -it -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=pwd -e POSTGRES_DB=userdb -p 5433:5432 -d postgres:latest
-docker run --name=postgre-post -it -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=pwd -e POSTGRES_DB=postdb -p 5434:5432 -d postgres:latest
-kubectl apply -f ./namespace.yaml
-kubectl apply -f ./user-srv.yaml
-kubectl apply -f ./post-srv.yaml
+kubectl apply -f ./
 ``` 
-
+All objects will be created in namespace 'vez'
 To view all objects created by Kubernetes, run:
 ```shell
-kubectl get all -n=k8-vez
+kubectl get all -n=vez
 ```
-Along with services and deployments, this command outputs pods and replica-sets.
 
-## To un-deploy
+## To undeploy
 run
 ```shell
-kubectl delete -f ./user-srv.yaml
-kubectl delete -f ./post-srv.yaml
+kubectl delete -f ./
 ``` 
-in current folder.
 This will delete all objects created.
 
+## Decode/View secrets 
+```shell
+kubectl get secret db-user-pass -n vez -o jsonpath='{.data.username}' | base64 --decode
+kubectl get secret db-user-pass -n vez -o jsonpath='{.data.password}' | base64 --decode
+
+kubectl get secret db-post-pass -n vez -o jsonpath='{.data.username}' | base64 --decode
+kubectl get secret db-post-pass -n vez -o jsonpath='{.data.password}' | base64 --decode
+```
 ## Links
 - [User-service on docker hub](https://hub.docker.com/repository/docker/vzateychuk/user-service/general)
 - [Post-service on docker hub](https://hub.docker.com/repository/docker/vzateychuk/post-service/general)

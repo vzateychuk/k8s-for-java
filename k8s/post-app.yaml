@@ -47,8 +47,14 @@ spec:
             - name: DB_NAME
               value: postdb
             - name: DB_LOGIN
-              value: admin
+              valueFrom:
+                secretKeyRef:
+                  name: db-post-pass
+                  key: username
             - name: DB_PWD
-              value: pwd
+              valueFrom:
+                secretKeyRef:
+                  name: db-post-pass
+                  key: password
             - name: USER_SERVICE_API
               value: http://host.docker.internal:8081/users/
