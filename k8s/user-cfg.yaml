@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: user-cfg
+  namespace: vez
+  labels:
+    app: vez-app
+    owner: vzateychuk
+data:
+  # property-like keys: connect to user-DB
+  userdb_host:    "10.110.61.113"
+  userdb_port:    "5432"
+  userdb_db_name: "userdb"

@@ -45,7 +45,10 @@ spec:
             - name: POSTGRES_PASSWORD
               value: pwd
             - name: POSTGRES_DB
-              value: userdb
+              valueFrom:
+                configMapKeyRef:
+                  name: user-cfg
+                  key: userdb_db_name
             - name: PGDATA
               value: /data/pgdata
           volumeMounts:

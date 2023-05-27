@@ -48,11 +48,20 @@ spec:
               name: user-store
           env:
             - name: DB_HOST
-              value: 10.110.61.113
+              valueFrom:
+                configMapKeyRef:
+                  name: user-cfg    # The ConfigMap this value comes from
+                  key: userdb_host # The key to fetch
             - name: DB_PORT
-              value: "5432"
+              valueFrom:
+                configMapKeyRef:
+                  name: user-cfg
+                  key: userdb_port
             - name: DB_NAME
-              value: userdb
+              valueFrom:
+                configMapKeyRef:
+                  name: user-cfg
+                  key: userdb_db_name
             - name: DB_LOGIN
               value: admin
             - name: DB_PWD
