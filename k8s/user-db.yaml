@@ -8,7 +8,7 @@ metadata:
 spec:
   selector:
     app: userdb
-  type: ClusterIP
+  type: LoadBalancer
   clusterIP: 10.110.61.113
   ports:
     - port: 5432
@@ -41,9 +41,15 @@ spec:
             - containerPort: 5432
           env:
             - name: POSTGRES_USER
-              value: admin
+              valueFrom:
+                secretKeyRef:
+                  name: user-secret
+                  key: username
             - name: POSTGRES_PASSWORD
-              value: pwd
+              valueFrom:
+                secretKeyRef:
+                  name: user-secret
+                  key: password
             - name: POSTGRES_DB
               valueFrom:
                 configMapKeyRef:
@@ -52,11 +58,27 @@ spec:
             - name: PGDATA
               value: /data/pgdata
           volumeMounts:
-            - name: userdb-vol
+            - name: user-vol
               mountPath: /data
+            # db-initialization scripts will run as soon as container starts
+            - name: dbinit
+              mountPath: /docker-entrypoint-initdb.d
+              readOnly: true
+      volumes:
+        # see 'Initialization scripts' https://hub.docker.com/_/postgres
+        - name: dbinit
+          configMap:
+            # Provide the name of the ConfigMap you want to mount.
+            name: user-cfg
+            # An array of keys from the ConfigMap to create as files
+            items:
+              - key: "users-schema.sql"
+                path: "10_users-schema.sql"
+              - key: "users-data.sql"
+                path: "20_users-data.sql"
   volumeClaimTemplates:
     - metadata:
-        name: userdb-vol
+        name: user-vol
         namespace: vez
       spec:
         accessModes: [ "ReadWriteOnce" ]

@@ -65,11 +65,11 @@ spec:
             - name: DB_LOGIN
               valueFrom:
                 secretKeyRef:
-                  name: db-user-pass
+                  name: user-secret
                   key: username
             - name: DB_PWD
               valueFrom:
                 secretKeyRef:
-                  name: db-user-pass
+                  name: user-secret
                   key: password
 

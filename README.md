@@ -49,11 +49,12 @@ This will delete all objects created.
 
 ## Decode/View secrets 
 ```shell
-kubectl get secret db-user-pass -n vez -o jsonpath='{.data.username}' | base64 --decode
-kubectl get secret db-user-pass -n vez -o jsonpath='{.data.password}' | base64 --decode
-
-kubectl get secret db-post-pass -n vez -o jsonpath='{.data.username}' | base64 --decode
-kubectl get secret db-post-pass -n vez -o jsonpath='{.data.password}' | base64 --decode
+# User
+kubectl get secret user-secret -n vez -o jsonpath='{.data.username}' | base64 --decode
+kubectl get secret user-secret -n vez -o jsonpath='{.data.password}' | base64 --decode
+# Post
+kubectl get secret post-secret -n vez -o jsonpath='{.data.username}' | base64 --decode
+kubectl get secret post-secret -n vez -o jsonpath='{.data.password}' | base64 --decode
 ```
 ## Links
 - [User-service on docker hub](https://hub.docker.com/repository/docker/vzateychuk/user-service/general)
