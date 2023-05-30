@@ -41,16 +41,41 @@ spec:
             - containerPort: 5432
           env:
             - name: POSTGRES_USER
-              value: admin
+              valueFrom:
+                secretKeyRef:
+                  name: post-secret
+                  key: username
             - name: POSTGRES_PASSWORD
-              value: pwd
+              valueFrom:
+                secretKeyRef:
+                  name: post-secret
+                  key: password
             - name: POSTGRES_DB
-              value: postdb
+              valueFrom:
+                configMapKeyRef:
+                  name: post-cfg
+                  key: postdb_db_name
             - name: PGDATA
               value: /data/pgdata
           volumeMounts:
-            - name: postdb-vol
+            - name: post-vol
               mountPath: /data
+            # db-initialization scripts will run as soon as container starts
+            - name: dbinit
+              mountPath: /docker-entrypoint-initdb.d
+              readOnly: true
+      volumes:
+        # see 'Initialization scripts' https://hub.docker.com/_/postgres
+        - name: dbinit
+          configMap:
+            # Provide the name of the ConfigMap you want to mount.
+            name: post-cfg
+            # An array of keys from the ConfigMap to create as files
+            items:
+              - key: "post-schema.sql"
+                path: "10_post-schema.sql"
+              - key: "post-data.sql"
+                path: "20_post-data.sql"
   volumeClaimTemplates:
     - metadata:
         name: postdb-vol

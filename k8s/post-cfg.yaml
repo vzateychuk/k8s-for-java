@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: post-cfg
+  namespace: vez
+  labels:
+    app: vez-app
+    owner: vzateychuk
+data:
+  # property-like keys: connect to post-DB
+  postdb_host:    "10.99.22.101"
+  postdb_port:    "5432"
+  postdb_db_name: "postdb"
+  # SQL script to init postdb database (create tables)
+  post-schema.sql: |
+    CREATE TABLE public.posts (
+      id int8 NOT NULL,
+      author_id int8 NOT NULL,
+      posted_at date NULL,
+      "text" varchar(255) NULL,
+      CONSTRAINT posts_pkey PRIMARY KEY (id)
+    );
+  post-data.sql: |
+    INSERT INTO posts (id, author_id, posted_at, "text") VALUES(1, 1, '2023-05-28', 'Bilbo Baggins open the door');
+    INSERT INTO posts (id, author_id, posted_at, "text") VALUES(2, 2, '2023-05-28', 'Frodo Baggins says hello');
+    INSERT INTO posts (id, author_id, posted_at, "text") VALUES(3, 3, '2023-05-28', 'Gendalf Gray wrote this book');

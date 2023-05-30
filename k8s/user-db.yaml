@@ -8,7 +8,7 @@ metadata:
 spec:
   selector:
     app: userdb
-  type: LoadBalancer
+  type: ClusterIP
   clusterIP: 10.110.61.113
   ports:
     - port: 5432
