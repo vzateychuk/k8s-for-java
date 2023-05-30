@@ -3,7 +3,7 @@ version: "3.9"
 services:
 
   user-service:
-    image: vzateychuk/user-service:3.0.0
+    image: vzateychuk/user-service:4.0.0
     container_name: user-service
     restart: on-failure
     ports:
@@ -29,7 +29,7 @@ services:
       - "5433:5432"
 
   post-service:
-    image: vzateychuk/post-service:3.0.0
+    image: vzateychuk/post-service:4.0.0
     container_name: post-service
     restart: on-failure
     ports:

@@ -14,8 +14,8 @@ To run the service you need to define env values:
 ## Build and Run with Docker
 ```shell
 docker run --name=postgres-postdb -it -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=pwd -e POSTGRES_DB=postdb -p 5434:5432 -d postgres:latest
-docker build -t vzateychuk/post-service:3.0.0 .
-docker run --name=post-service -e DB_HOST=host.docker.internal -e DB_NAME=postdb -e DB_PORT=5434 -e DB_LOGIN=admin -e DB_PWD=pwd -e USER_SERVICE_API=http://localhost:8081/users/ -p 8082:8080 -d -ti vzateychuk/post-service:3.0.0
+docker build -t vzateychuk/post-service:4.0.0 .
+docker run --name=post-service -e DB_HOST=host.docker.internal -e DB_NAME=postdb -e DB_PORT=5434 -e DB_LOGIN=admin -e DB_PWD=pwd -e USER_SERVICE_API=http://localhost:8081/users/ -p 8082:8080 -d -ti vzateychuk/post-service:4.0.0
 ```
 
 ## Endpoints

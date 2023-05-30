@@ -36,7 +36,7 @@ spec:
     spec:
       containers:
         - name: post-service
-          image: vzateychuk/post-service:3.0.0
+          image: vzateychuk/post-service:4.0.0
           ports:
             - containerPort: 8080
           env:

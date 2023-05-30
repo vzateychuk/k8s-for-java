@@ -78,7 +78,7 @@ spec:
                 path: "20_post-data.sql"
   volumeClaimTemplates:
     - metadata:
-        name: postdb-vol
+        name: post-vol
         namespace: vez
       spec:
         accessModes: [ "ReadWriteOnce" ]
