@@ -6,7 +6,7 @@ metadata:
 spec:
   type: NodePort
   selector:
-    app: k8s-post-srv
+    app: postsrv
   ports:
     - name: http
       nodePort: 30082
@@ -26,12 +26,12 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: k8s-post-srv
+      app: postsrv
   replicas: 2
   template:
     metadata:
       labels:
-        app: k8s-post-srv
+        app: postsrv
         owner: vzateychuk
     spec:
       containers:
@@ -41,20 +41,29 @@ spec:
             - containerPort: 8080
           env:
             - name: DB_HOST
-              value: 10.99.22.101
+              valueFrom:
+                configMapKeyRef:
+                  name: post-cfg    # The ConfigMap this value comes from
+                  key: postdb_host # The key to fetch
             - name: DB_PORT
-              value: "5432"
+              valueFrom:
+                configMapKeyRef:
+                  name: post-cfg
+                  key: postdb_port
             - name: DB_NAME
-              value: postdb
+              valueFrom:
+                configMapKeyRef:
+                  name: post-cfg
+                  key: post_db_name
             - name: DB_LOGIN
               valueFrom:
                 secretKeyRef:
-                  name: db-post-pass
+                  name: post-secret
                   key: username
             - name: DB_PWD
               valueFrom:
                 secretKeyRef:
-                  name: db-post-pass
+                  name: post-secret
                   key: password
             - name: USER_SERVICE_API
               value: http://host.docker.internal:8081/users/

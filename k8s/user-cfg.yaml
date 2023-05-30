@@ -10,7 +10,7 @@ data:
   # property-like keys: connect to user-DB
   userdb_host:    "10.110.61.113"
   userdb_port:    "5432"
-  userdb_db_name: "userdb"
+  user_db_name:   "userdb"
   # SQL script to init userdb database (create tables)
   users-schema.sql: |
     CREATE TABLE users (

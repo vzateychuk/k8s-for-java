@@ -10,7 +10,7 @@ data:
   # property-like keys: connect to post-DB
   postdb_host:    "10.99.22.101"
   postdb_port:    "5432"
-  postdb_db_name: "postdb"
+  post_db_name:   "postdb"
   # SQL script to init postdb database (create tables)
   post-schema.sql: |
     CREATE TABLE public.posts (

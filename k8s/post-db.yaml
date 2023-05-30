@@ -54,7 +54,7 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: post-cfg
-                  key: postdb_db_name
+                  key: post_db_name
             - name: PGDATA
               value: /data/pgdata
           volumeMounts:

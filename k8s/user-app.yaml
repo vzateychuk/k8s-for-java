@@ -61,7 +61,7 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: user-cfg
-                  key: userdb_db_name
+                  key: user_db_name
             - name: DB_LOGIN
               valueFrom:
                 secretKeyRef:
