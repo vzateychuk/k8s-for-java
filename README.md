@@ -47,6 +47,10 @@ kubectl delete -f ./
 ``` 
 This will delete all objects created.
 
+## Healthcheck
+[Liveness probe: http://localhost:30081/health/live](http://localhost:30081/health/live)
+[Version/Readiness: http://localhost:30081/health/ready](http://localhost:30081/health/ready)
+
 ## Decode/View secrets 
 ```shell
 # User

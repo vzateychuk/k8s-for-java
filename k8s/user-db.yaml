@@ -19,7 +19,7 @@ spec:
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: userdb-ss
+  name: userdb
   namespace: vez
 spec:
   selector:

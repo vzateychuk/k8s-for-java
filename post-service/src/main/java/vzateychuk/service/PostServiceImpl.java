@@ -44,7 +44,7 @@ public class PostServiceImpl implements PostService {
 
     private void updateAmountOfPostsForUser(PostEntity post) {
 
-        UserDto userDto = restTemplate.getForObject(userAPI + post.getAuthorId() , UserDto.class);
+        UserDto userDto = restTemplate.getForObject(userAPI + "/users/" + post.getAuthorId() , UserDto.class);
         if (userDto == null) {
             throw new NotFoundEntityException("AuthorId: " + post.getAuthorId() + " not found");
         }

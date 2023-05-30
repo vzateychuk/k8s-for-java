@@ -36,7 +36,7 @@ spec:
     spec:
       containers:
         - name: post-service
-          image: vzateychuk/post-service:4.0.0
+          image: vzateychuk/post-service:4.1.0
           ports:
             - containerPort: 8080
           env:
@@ -66,4 +66,4 @@ spec:
                   name: post-secret
                   key: password
             - name: USER_SERVICE_API
-              value: http://host.docker.internal:8081/users/
+              value: http://host.docker.internal:30081

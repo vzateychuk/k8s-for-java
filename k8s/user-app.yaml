@@ -40,7 +40,7 @@ spec:
             claimName: user-pvc
       containers:
         - name: user-service
-          image: vzateychuk/user-service:4.0.0
+          image: vzateychuk/user-service:4.1.0
           ports:
             - containerPort: 8080
           volumeMounts:

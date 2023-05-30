@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class GreetingController {
     private static final Logger log = LoggerFactory.getLogger(GreetingController.class);
 
-    @GetMapping({"", "/greeting"})
+    @GetMapping({"", "/", "/greeting", "/greeting/"})
     public String greeting() {
         log.info("/greeting invoked");
         return "PostService says: Hello, k8s!";
