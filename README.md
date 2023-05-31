@@ -65,3 +65,4 @@ kubectl get secret post-secret -n vez -o jsonpath='{.data.password}' | base64 --
 - [Post-service on docker hub](https://hub.docker.com/repository/docker/vzateychuk/post-service/general)
 
 [Siarhei_Svila kubernetes-mentoring-program](https://git.epam.com/Siarhei_Svila/kubernetes-mentoring-program/-/blob/main/1-microservices-architecture-and-docker/task/README.md)
+[Как стартовать один контейнер только старта другого (InitContainer)](https://medium.com/@xcoulon/initializing-containers-in-order-with-kubernetes-18173b9cc222)

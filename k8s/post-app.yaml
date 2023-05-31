@@ -18,7 +18,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: k8s-post
+  name: posts
   namespace: vez
   labels:
     app: vez-app
@@ -34,6 +34,24 @@ spec:
         app: postsrv
         owner: vzateychuk
     spec:
+      initContainers:
+        # Checking if the dataBase ready to accept connections
+        - name: check-db-ready
+          image: postgres:latest
+          env:
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: post-cfg
+                  key: postdb_host
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: post-cfg
+                  key: postdb_port
+          command: ['sh', '-c',
+            'until pg_isready -h $DB_HOST -p $DB_PORT; 
+            do echo waiting for database; sleep 2; done;']
       containers:
         - name: post-service
           image: vzateychuk/post-service:4.1.0

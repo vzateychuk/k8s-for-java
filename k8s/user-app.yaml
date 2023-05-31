@@ -18,7 +18,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: k8s-user
+  name: users
   namespace: vez
   labels:
     app: vez-app
@@ -38,6 +38,24 @@ spec:
         - name: user-store
           persistentVolumeClaim:
             claimName: user-pvc
+      initContainers:
+        # Checking if the dataBase ready to accept connections
+        - name: check-db-ready
+          image: postgres:latest
+          env:
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: user-cfg
+                  key: userdb_host
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: user-cfg
+                  key: userdb_port
+          command: ['sh', '-c',
+            'until pg_isready -h $DB_HOST -p $DB_PORT; 
+            do echo waiting for database; sleep 2; done;']
       containers:
         - name: user-service
           image: vzateychuk/user-service:4.1.0
@@ -50,8 +68,8 @@ spec:
             - name: DB_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: user-cfg    # The ConfigMap this value comes from
-                  key: userdb_host # The key to fetch
+                  name: user-cfg
+                  key: userdb_host
             - name: DB_PORT
               valueFrom:
                 configMapKeyRef:
