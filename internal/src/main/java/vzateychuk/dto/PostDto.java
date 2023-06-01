@@ -7,15 +7,17 @@ public class PostDto {
     private long authorId;
     private String text;
     private LocalDate postedAt;
+    private String topic;
 
     public PostDto() {
     }
 
-    public PostDto(Long id, long authorId, String text, LocalDate postedAt) {
+    public PostDto(Long id, long authorId, String text, LocalDate postedAt, String topic) {
         this.id = id;
         this.authorId = authorId;
         this.text = text;
         this.postedAt = postedAt;
+        this.topic = topic;
     }
 
     public Long getId() {
@@ -48,6 +50,14 @@ public class PostDto {
 
     public void setPostedAt(LocalDate postedAt) {
         this.postedAt = postedAt;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
     }
 
     public boolean equals(final Object o) {

@@ -17,14 +17,16 @@ public class PostEntity {
     private long authorId;
     private String text;
     private LocalDate postedAt;
+    private String topic;
 
     public PostEntity() {}
 
-    public PostEntity(Long id, long authorId, String text, LocalDate postedAt) {
+    public PostEntity(Long id, long authorId, String text, LocalDate postedAt, String topic) {
         this.id = id;
         this.authorId = authorId;
         this.text = text;
         this.postedAt = postedAt;
+        this.topic = topic;
     }
 
     public Long getId() {
@@ -57,6 +59,14 @@ public class PostEntity {
 
     public void setPostedAt(LocalDate postedAt) {
         this.postedAt = postedAt;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
     }
 
     public boolean equals(final Object o) {

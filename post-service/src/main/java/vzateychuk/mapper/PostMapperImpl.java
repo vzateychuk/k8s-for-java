@@ -15,7 +15,8 @@ public class PostMapperImpl implements Mapper<PostEntity, PostDto> {
                 entity.getId(),
                 entity.getAuthorId(),
                 entity.getText(),
-                entity.getPostedAt()
+                entity.getPostedAt(),
+                entity.getTopic()
         );
     }
 
@@ -26,7 +27,8 @@ public class PostMapperImpl implements Mapper<PostEntity, PostDto> {
                 dto.getId(),
                 dto.getAuthorId(),
                 dto.getText(),
-                dto.getPostedAt()
+                dto.getPostedAt(),
+                dto.getTopic()
         );
     }
 }

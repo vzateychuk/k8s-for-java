@@ -29,7 +29,7 @@ public class HealthController {
     public ResponseEntity<String> readiness() {
         log.info("/readiness invoked");
         return ResponseEntity.of(
-                Optional.ofNullable(buildProperties.getVersion())
+                Optional.of("UserService ver: {}" + buildProperties.getVersion())
         );
     }
 }

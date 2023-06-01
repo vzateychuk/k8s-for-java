@@ -28,6 +28,8 @@ spec:
     matchLabels:
       app: usersrv
   replicas: 2
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
@@ -58,7 +60,7 @@ spec:
             do echo waiting for database; sleep 2; done;']
       containers:
         - name: user-service
-          image: vzateychuk/user-service:4.1.0
+          image: vzateychuk/user-service:5.0.0
           ports:
             - containerPort: 8080
           volumeMounts:

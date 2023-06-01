@@ -32,8 +32,10 @@ public class HealthController {
         try {
             String userVer = userService.getVersion();
             String postVer = buildProperties.getVersion();
-            String resp = String.format("Post-service: %s, User-service: %s\n", postVer, userVer);
-            return ResponseEntity.of( Optional.of(resp) );
+            if (!postVer.equals(userVer)) {
+                log.warn("PostService ver: {}, but UserService ver: {}", postVer, userVer);
+            }
+            return ResponseEntity.of( Optional.of("PostService ver: {}" + postVer) );
         } catch (Exception ex) {
             log.warn("service not ready", ex);
             return ResponseEntity.internalServerError().body("service not ready");

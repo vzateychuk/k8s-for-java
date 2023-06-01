@@ -28,6 +28,8 @@ spec:
     matchLabels:
       app: postsrv
   replicas: 2
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
@@ -54,7 +56,7 @@ spec:
             do echo waiting for database; sleep 2; done;']
       containers:
         - name: post-service
-          image: vzateychuk/post-service:4.1.0
+          image: vzateychuk/post-service:5.0.0
           ports:
             - containerPort: 8080
           env:
