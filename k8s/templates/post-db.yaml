@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: postdb-srv
+  name: postdb-{{ .Release.Name }}
   namespace: {{ .Values.namespace }}
   labels:
     app: postdb-srv

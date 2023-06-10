@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: post-srv
+  name: post-{{ .Release.Name }}
   namespace: {{ .Values.namespace }}
 spec:
   type: NodePort
@@ -21,7 +21,7 @@ metadata:
   name: post-{{ .Release.Name }}
   namespace: {{ .Values.namespace }}
   labels:
-    app: vez-app
+    app: post-{{ .Release.Name }}
     owner: vzateychuk
 spec:
   selector:
