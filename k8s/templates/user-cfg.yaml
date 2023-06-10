@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: user-cfg
-  namespace: vez
+  namespace: {{ .Values.namespace }}
   labels:
     app: vez-app
     owner: vzateychuk

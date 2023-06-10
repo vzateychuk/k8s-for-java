@@ -1,0 +1,12 @@
+# Default values for my Helm Chart
+
+namespace: vez
+
+user:
+  replicaCount: 2
+  image: vzateychuk/user-service:5.0.0
+
+post:
+  replicaCount: 2
+  image: vzateychuk/post-service:5.0.0
+

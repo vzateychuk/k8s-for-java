@@ -1,0 +1,11 @@
+# values for prod
+namespace: prod
+
+user:
+  replicaCount: 3
+  image: vzateychuk/user-service:5.0.0
+
+post:
+  replicaCount: 3
+  image: vzateychuk/post-service:5.0.0
+

@@ -1,15 +1,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: postdb-srv
-  namespace: vez
+  name: userdb-srv
+  namespace: {{ .Values.namespace }}
   labels:
-    app: postdb-srv
+    app: userdb-srv
 spec:
   selector:
-    app: postdb
+    app: userdb
   type: ClusterIP
-  clusterIP: 10.99.22.101
+  clusterIP: 10.110.61.113
   ports:
     - port: 5432
       targetPort: 5432
@@ -19,23 +19,23 @@ spec:
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: postdb
-  namespace: vez
+  name: userdb
+  namespace: {{ .Values.namespace }}
 spec:
   selector:
     matchLabels:
-      app: postdb # has to match .spec.template.metadata.labels
+      app: userdb # has to match .spec.template.metadata.labels
   serviceName: "postgre"
   replicas: 1
   minReadySeconds: 10
   template:
     metadata:
       labels:
-        app: postdb # has to match .spec.selector.matchLabels
+        app: userdb # has to match .spec.selector.matchLabels
     spec:
       terminationGracePeriodSeconds: 10
       containers:
-        - name: postdb
+        - name: userdb
           image: postgres:latest
           ports:
             - containerPort: 5432
@@ -43,22 +43,22 @@ spec:
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: post-secret
+                  name: user-secret
                   key: username
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: post-secret
+                  name: user-secret
                   key: password
             - name: POSTGRES_DB
               valueFrom:
                 configMapKeyRef:
-                  name: post-cfg
-                  key: post_db_name
+                  name: user-cfg
+                  key: user_db_name
             - name: PGDATA
               value: /data/pgdata
           volumeMounts:
-            - name: post-vol
+            - name: user-vol
               mountPath: /data
             # db-initialization scripts will run as soon as container starts
             - name: dbinit
@@ -69,17 +69,17 @@ spec:
         - name: dbinit
           configMap:
             # Provide the name of the ConfigMap you want to mount.
-            name: post-cfg
+            name: user-cfg
             # An array of keys from the ConfigMap to create as files
             items:
-              - key: "post-schema.sql"
-                path: "10_post-schema.sql"
-              - key: "post-data.sql"
-                path: "20_post-data.sql"
+              - key: "users-schema.sql"
+                path: "10_users-schema.sql"
+              - key: "users-data.sql"
+                path: "20_users-data.sql"
   volumeClaimTemplates:
     - metadata:
-        name: post-vol
-        namespace: vez
+        name: user-vol
+        namespace: {{ .Values.namespace }}
       spec:
         accessModes: [ "ReadWriteOnce" ]
         storageClassName: hostpath

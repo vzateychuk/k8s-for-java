@@ -1,0 +1,17 @@
+apiVersion: v2
+name: AppUserPost
+description: User and Post services Helm chart
+type: application
+version: 0.1.0
+appVersion: "5.0.0"
+
+keywords:
+  - usersrv
+  - postsrv
+  - postgresql
+  - vzateychuk
+
+maintainers:
+  - name: Vladimir Zateychuk
+    email: vzateychuk@gmail.com
+    url: https://www.youtube.com/watch?v=-lLT0vlaBpk

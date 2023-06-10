@@ -1,41 +1,45 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: post-srv
-  namespace: vez
+  name: user-srv
+  namespace: {{ .Values.namespace }}
 spec:
   type: NodePort
   selector:
-    app: postsrv
+    app: user-{{ .Release.Name }}
   ports:
     - name: http
-      nodePort: 30082
+      nodePort: 30081
       protocol: "TCP"
-      port: 8082
+      port: 8081
       targetPort: 8080
 ---
 
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: posts
-  namespace: vez
+  name: user-{{ .Release.Name }}
+  namespace: {{ .Values.namespace }}
   labels:
     app: vez-app
     owner: vzateychuk
 spec:
   selector:
     matchLabels:
-      app: postsrv
-  replicas: 2
+      app: user-{{ .Release.Name }}
+  replicas: {{ .Values.user.replicaCount }}
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: postsrv
+        app: user-{{ .Release.Name }}
         owner: vzateychuk
     spec:
+      volumes:
+        - name: user-store
+          persistentVolumeClaim:
+            claimName: user-pvc
       initContainers:
         # Checking if the dataBase ready to accept connections
         - name: check-db-ready
@@ -44,46 +48,48 @@ spec:
             - name: DB_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: post-cfg
-                  key: postdb_host
+                  name: user-cfg
+                  key: userdb_host
             - name: DB_PORT
               valueFrom:
                 configMapKeyRef:
-                  name: post-cfg
-                  key: postdb_port
+                  name: user-cfg
+                  key: userdb_port
           command: ['sh', '-c',
             'until pg_isready -h $DB_HOST -p $DB_PORT; 
             do echo waiting for database; sleep 2; done;']
       containers:
-        - name: post-service
-          image: vzateychuk/post-service:5.0.0
+        - name: user-service
+          image: {{ .Values.user.image }}
           ports:
             - containerPort: 8080
+          volumeMounts:
+            - mountPath: "/home/data"
+              name: user-store
           env:
             - name: DB_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: post-cfg    # The ConfigMap this value comes from
-                  key: postdb_host # The key to fetch
+                  name: user-cfg
+                  key: userdb_host
             - name: DB_PORT
               valueFrom:
                 configMapKeyRef:
-                  name: post-cfg
-                  key: postdb_port
+                  name: user-cfg
+                  key: userdb_port
             - name: DB_NAME
               valueFrom:
                 configMapKeyRef:
-                  name: post-cfg
-                  key: post_db_name
+                  name: user-cfg
+                  key: user_db_name
             - name: DB_LOGIN
               valueFrom:
                 secretKeyRef:
-                  name: post-secret
+                  name: user-secret
                   key: username
             - name: DB_PWD
               valueFrom:
                 secretKeyRef:
-                  name: post-secret
+                  name: user-secret
                   key: password
-            - name: USER_SERVICE_API
-              value: http://host.docker.internal:30081
+
