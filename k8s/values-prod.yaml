@@ -9,3 +9,6 @@ post:
   replicaCount: 3
   image: vzateychuk/post-service:5.0.0
 
+metas:
+    env: prod
+    owner: vzateychuk

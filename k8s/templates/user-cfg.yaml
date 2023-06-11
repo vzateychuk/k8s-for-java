@@ -3,9 +3,12 @@ kind: ConfigMap
 metadata:
   name: user-cfg
   namespace: {{ .Values.namespace }}
-  labels:
-    app: vez-app
-    owner: vzateychuk
+  # from values.yaml
+  {{- range $key, $val := .Values.metas }}
+  {{ $key }}: {{ $val | upper | quote }}
+  {{- end }}
+  # from _helpers.tpl
+  {{- template "vez-srv.v1.labels" . }}
 data:
   # property-like keys: connect to user-DB
   userdb_host:    "10.110.61.113"
