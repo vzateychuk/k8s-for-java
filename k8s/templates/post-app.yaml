@@ -4,14 +4,12 @@ metadata:
   name: post-{{ .Release.Name }}
   namespace: {{ .Values.namespace }}
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     app: post-{{ .Release.Name }}
   ports:
     - name: http
-      nodePort: 30082
-      protocol: "TCP"
-      port: 8082
+      port: 20082
       targetPort: 8080
 ---
 

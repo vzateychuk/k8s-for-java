@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ing-{{ .Release.Name }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    owner: vzateychuk
+spec:
+  # This is important and required since Kubernetes 1.22
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          # Routing for the user-API
+          - pathType: Prefix
+            path: /user
+            backend:
+              service:
+                name: user-{{ .Release.Name }}
+                port:
+                  number: 20081

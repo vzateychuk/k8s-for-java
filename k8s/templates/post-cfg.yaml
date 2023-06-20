@@ -3,10 +3,6 @@ kind: ConfigMap
 metadata:
   name: post-cfg
   namespace: {{ .Values.namespace }}
-  # from values.yaml
-  {{- range $key, $val := .Values.metas }}
-  {{ $key }}: {{ $val | upper | quote }}
-  {{- end }}
   # from _helpers.tpl
   {{- template "vez-srv.v1.labels" . }}
 data:
