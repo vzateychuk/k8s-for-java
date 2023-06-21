@@ -16,7 +16,7 @@ spec:
         paths:
           # Routing for the User-API
           - pathType: Prefix
-            path: /user(/|$)(.*)
+            path: /srv-user(/|$)(.*)
             backend:
               service:
                 name: user-{{ .Release.Name }}
@@ -25,7 +25,7 @@ spec:
 
           # Routing for the User-API
           - pathType: Prefix
-            path: /post(/|$)(.*)
+            path: /srv-post(/|$)(.*)
             backend:
               service:
                 name: post-{{ .Release.Name }}
